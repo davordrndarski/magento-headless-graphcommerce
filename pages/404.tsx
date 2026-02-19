@@ -10,7 +10,7 @@ import { Box, Container, Typography } from '@mui/material'
 import type { LayoutNavigationProps } from '../components'
 import { LayoutDocument, LayoutNavigation } from '../components'
 import { graphqlSharedClient, graphqlSsrClient } from '../lib/graphql/graphqlSsrClient'
-import { GetCmsPageDocument } from '../graphql/CmsPage.gql'
+import { GetCmsPageDocument } from '../graphql/CmsPage.gql.ts'
 
 type CmsPageType = {
   identifier?: string | null

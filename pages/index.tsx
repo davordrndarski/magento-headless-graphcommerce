@@ -158,7 +158,6 @@ function HomePage(props: CmsPageProps) {
                     <div key={product.uid}>
                       <ProductListItems
                         items={[product]}
-                        renderers={productListRenderer}
                         loadingEager={1}
                         title=""
                       />
