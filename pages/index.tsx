@@ -211,10 +211,10 @@ export const getStaticProps: GetPageStaticProps = async (context) => {
     if (!block) continue
 
     try {
-      let cleanContent = block.content
-        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-        .replace(/<[^>]*>/g, '')
-        .trim()
+      let cleanContent = (block.content ?? '')
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      .replace(/<[^>]*>/g, '')
+      .trim()
       
       const productSkus = cleanContent
         .split(',')
