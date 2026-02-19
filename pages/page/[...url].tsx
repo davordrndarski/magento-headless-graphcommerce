@@ -78,14 +78,14 @@ export const getStaticProps: GetPageStaticProps = async (context) => {
   const conf = client.query({ query: StoreConfigDocument })
   const staticClient = graphqlSsrClient(context)
 
-  const cmsPageQuery = staticClient.query({ query: CmsPageDocument, variables: { url } })
+  const cmsPageQuery = staticClient.query({ query: CmsPageDocument, variables: { identifier: url } })
   const layout = staticClient.query({
     query: LayoutDocument,
     fetchPolicy: cacheFirst(staticClient),
   })
 
-  const cmsPage = (await cmsPageQuery).data?.route
-  if (!cmsPage || !isTypename(cmsPage, ['CmsPage']))
+  const cmsPage = (await cmsPageQuery).data?.cmsPage
+  if (!cmsPage)
     return redirectOrNotFound(staticClient, conf, params, locale)
 
   const result = {
