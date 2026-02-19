@@ -1,19 +1,35 @@
 import type { PageOptions } from '@graphcommerce/framer-next-pages'
 import { cacheFirst } from '@graphcommerce/graphql'
-import { CmsPageContent, CmsPageDocument, type CmsPageFragment } from '@graphcommerce/magento-cms'
 import { SearchLink } from '@graphcommerce/magento-search'
 import { PageMeta, StoreConfigDocument } from '@graphcommerce/magento-store'
-import { icon404, IconSvg, isTypename, revalidate } from '@graphcommerce/next-ui'
+import { icon404, IconSvg, revalidate } from '@graphcommerce/next-ui'
 import type { GetStaticProps } from '@graphcommerce/next-ui'
 import { t } from '@lingui/core/macro'
 import { Trans } from '@lingui/react/macro'
 import { Box, Container, Typography } from '@mui/material'
 import type { LayoutNavigationProps } from '../components'
-import { LayoutDocument, LayoutNavigation, productListRenderer } from '../components'
+import { LayoutDocument, LayoutNavigation } from '../components'
 import { graphqlSharedClient, graphqlSsrClient } from '../lib/graphql/graphqlSsrClient'
+import { GetCmsPageDocument } from '../graphql/CmsPage.gql'
 
-type Props = { cmsPage: CmsPageFragment | null }
+type CmsPageType = {
+  identifier?: string | null
+  title?: string | null
+  content?: string | null
+  content_heading?: string | null
+}
+
+type Props = { cmsPage: CmsPageType | null }
 type GetPageStaticProps = GetStaticProps<LayoutNavigationProps, Props>
+
+function decodeHtml(html: string): string {
+  return html
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+}
 
 function RouteNotFoundPage(props: Props) {
   const { cmsPage } = props
@@ -29,13 +45,19 @@ function RouteNotFoundPage(props: Props) {
             {cmsPage?.content_heading ?? <Trans>Whoops our bad...</Trans>}
           </Typography>
 
-          {cmsPage ? (
-            <CmsPageContent cmsPage={cmsPage} productListRenderer={productListRenderer} />
+          {cmsPage?.content ? (
+            <Container sx={{
+              '& .pagebuilder-mobile-only': { display: { xs: 'block', md: 'none' } },
+              '& .pagebuilder-mobile-hidden': { display: { xs: 'none', md: 'block' } }
+            }}>
+              <div dangerouslySetInnerHTML={{ __html: decodeHtml(cmsPage.content) }} />
+            </Container>
           ) : (
             <Typography variant='body1'>
               <Trans>We couldn't find the page you were looking for</Trans>
             </Typography>
           )}
+
           <Box sx={{ mt: 4, mb: 2 }}>
             <SearchLink href='/search' sx={{ width: '100%', py: 2, typography: 'body1' }}>
               <Trans>Search...</Trans>
@@ -62,14 +84,14 @@ export const getStaticProps: GetPageStaticProps = async (context) => {
     fetchPolicy: cacheFirst(staticClient),
   })
   const confData = (await conf).data
-  const url = confData?.storeConfig?.cms_no_route ?? ''
-  const cmsPageQuery = staticClient.query({ query: CmsPageDocument, variables: { url } })
-  const cmsPage = (await cmsPageQuery).data?.route
+  const identifier = confData?.storeConfig?.cms_no_route ?? 'no-route'
+  const cmsPageQuery = staticClient.query({ query: GetCmsPageDocument, variables: { identifier } })
+  const cmsPage = (await cmsPageQuery).data?.cmsPage ?? null
 
   return {
     props: {
       ...(await layout).data,
-      cmsPage: cmsPage && isTypename(cmsPage, ['CmsPage']) ? cmsPage : null,
+      cmsPage,
       up: { href: '/', title: t`Home` },
       apolloState: await conf.then(() => client.cache.extract()),
     },
