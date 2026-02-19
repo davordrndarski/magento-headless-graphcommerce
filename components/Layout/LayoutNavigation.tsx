@@ -39,15 +39,18 @@ import { Footer } from './Footer'
 import type { LayoutQuery } from './Layout.gql'
 import { Logo } from './Logo'
 
-// Dodavanje koda da prepozna HTML
 function decodeHtml(html: string) {
-  if (typeof window === 'undefined') return html
-  const txt = document.createElement('textarea')
-  txt.innerHTML = html
-  return txt.value
+  const decode = (str: string) =>
+    str
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+
+  return decode(decode(html)).replace(/\r\n/g, '').replace(/\n/g, '')
 }
 
-// Nova komponenta za pojedinačnu kategoriju - SA Next.js Link
 function CategoryNavItem({ category }: { category: any }) {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -59,15 +62,13 @@ function CategoryNavItem({ category }: { category: any }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Glavna kategorija - Next.js Link */}
-      <Link 
+      <Link
         href={`/${category.url_path}`}
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
         {category.name}
       </Link>
 
-      {/* Podkategorije */}
       {category.children?.length > 0 && (
         <div
           className="desktop-dropdown"
@@ -85,11 +86,11 @@ function CategoryNavItem({ category }: { category: any }) {
               <Link
                 key={sub.uid}
                 href={`/${sub.url_path}`}
-                style={{ 
+                style={{
                   display: 'block',
                   padding: '8px 16px',
                   textDecoration: 'none',
-                  color: 'inherit'
+                  color: 'inherit',
                 }}
               >
                 {sub.name}
@@ -208,7 +209,6 @@ export function LayoutNavigation(props: LayoutNavigationProps) {
                 authHref='/account'
                 BadgeProps={{ color: 'secondary' }}
               />
-              {/* The placeholder exists because the CartFab is sticky but we want to reserve the space for the <CartFab /> */}
               {cartEnabled && <PlaceholderFab />}
             </DesktopNavActions>
 
@@ -233,7 +233,6 @@ export function LayoutNavigation(props: LayoutNavigationProps) {
             }
           />
         }
-
         cartFab={<CartFab BadgeProps={{ color: 'secondary' }} />}
         menuFab={<NavigationFab onClick={() => selection.set([])} />}
       >
