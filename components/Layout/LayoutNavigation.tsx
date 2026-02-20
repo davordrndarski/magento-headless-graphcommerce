@@ -198,9 +198,9 @@ export function LayoutNavigation(props: LayoutNavigationProps) {
                 formControl={{ sx: { width: '400px' } }}
                 searchField={{ productListRenderer }}
               />
-              <Fab href='/service' aria-label={t`Customer Service`} size='large' color='inherit'>
+              {/* <Fab href='/service' aria-label={t`Customer Service`} size='large' color='inherit'>
                 <IconSvg src={iconCustomerService} size='large' />
-              </Fab>
+              </Fab> */}
               <WishlistFab
                 icon={<IconSvg src={iconHeart} size='large' />}
                 BadgeProps={{ color: 'secondary' }}

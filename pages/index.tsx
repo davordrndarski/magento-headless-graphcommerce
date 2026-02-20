@@ -1,18 +1,15 @@
+import React from 'react'
 import type { PageOptions } from '@graphcommerce/framer-next-pages'
 import { cacheFirst } from '@graphcommerce/graphql'
 import { StoreConfigDocument } from '@graphcommerce/magento-store'
-import { ProductListDocument } from '@graphcommerce/magento-product'
+import { ProductListDocument, ProductScroller } from '@graphcommerce/magento-product'
 import { breadcrumbs } from '@graphcommerce/next-config/config'
-import { Container, LayoutHeader, PageMeta, revalidate } from '@graphcommerce/next-ui'
+import { Container, LayoutHeader, PageMeta, revalidate, responsiveVal } from '@graphcommerce/next-ui'
 import type { GetStaticProps } from '@graphcommerce/next-ui'
 import { t } from '@lingui/core/macro'
-import { Typography, Box } from '@mui/material'
-import { useEffect, useState } from 'react'
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
+import NoSsr from '@mui/material/NoSsr'
 import type { LayoutNavigationProps } from '../components'
-import { LayoutDocument, LayoutNavigation, productListRenderer, ProductListItems } from '../components'
+import { LayoutDocument, LayoutNavigation, productListRenderer } from '../components'
 import { graphqlSharedClient, graphqlSsrClient } from '../lib/graphql/graphqlSsrClient'
 import { GetCmsPageDocument } from '../graphql/CmsPage.gql'
 import { GetCmsBlockDocument } from '../graphql/CmsBlock.gql'
@@ -26,88 +23,46 @@ type CmsPageType = {
   meta_description?: string | null
 }
 
-export type CmsPageProps = { 
+type ContentPart =
+  | { type: 'html'; html: string }
+  | { type: 'slider'; blockId: string }
+
+export type CmsPageProps = {
   cmsPage: CmsPageType | null
-  productSliders?: Array<{blockId: string, products: any[]}>
+  productSliders?: Array<{ blockId: string; products: any[] }>
+  contentParts?: ContentPart[]
 }
 
 type GetPageStaticProps = GetStaticProps<LayoutNavigationProps, CmsPageProps>
 
 const PRODUCT_BLOCK_IDS = ['test_proizvodi', 'test_proizvodi_dva']
 
+const containerSx = {
+  my: 4,
+  '& .pagebuilder-mobile-only': { display: { xs: 'block', md: 'none' } },
+  '& .pagebuilder-mobile-hidden': { display: { xs: 'none', md: 'block' } },
+}
+
 function HomePage(props: CmsPageProps) {
-  const { cmsPage, productSliders = [] } = props
-  const [contentParts, setContentParts] = useState<string[]>([])
-  const [sliderIndices, setSliderIndices] = useState<number[]>([])
-
-  useEffect(() => {
-    if (!cmsPage?.content || productSliders.length === 0) return
-
-    let content = cmsPage.content
-    const parts: string[] = []
-    const indices: number[] = []
-
-    productSliders.forEach((slider, idx) => {
-      const skuList = slider.products.map(p => p.sku).join(',')
-      const splitResult = content.split(skuList)
-      
-      if (splitResult.length > 1) {
-        parts.push(splitResult[0])
-        indices.push(idx)
-        content = splitResult.slice(1).join(skuList)
-      }
-    })
-
-    if (content) {
-      parts.push(content)
-    }
-
-    setContentParts(parts)
-    setSliderIndices(indices)
-  }, [cmsPage?.content, productSliders])
-
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: true,
-    swipe: true,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } }
-    ]
-  }
+  const { cmsPage, productSliders = [], contentParts = [] } = props
 
   if (!cmsPage) return <Container>Configure cmsPage home</Container>
 
-  if (contentParts.length === 0 && cmsPage?.content) {
+  if (contentParts.length === 0) {
     return (
       <>
         <PageMeta
           title={cmsPage.meta_title || cmsPage.title || t`Home`}
           metaDescription={cmsPage.meta_description || undefined}
         />
-        
         <LayoutHeader floatingMd hideMd={breadcrumbs} floatingSm />
-
-        <Container 
-          sx={{ 
-            my: 4,
-            '& .pagebuilder-mobile-only': {
-              display: { xs: 'block', md: 'none' }
-            },
-            '& .pagebuilder-mobile-hidden': {
-              display: { xs: 'none', md: 'block' }
-            }
-          }}
-        >
-          <div dangerouslySetInnerHTML={{ __html: cmsPage.content }} />
-        </Container>
+        {cmsPage.content && (
+          <NoSsr>
+            <Container sx={containerSx}>
+              <div dangerouslySetInnerHTML={{ __html: cmsPage.content }} />
+            </Container>
+          </NoSsr>
+        )}
       </>
     )
   }
@@ -118,57 +73,40 @@ function HomePage(props: CmsPageProps) {
         title={cmsPage.meta_title || cmsPage.title || t`Home`}
         metaDescription={cmsPage.meta_description || undefined}
       />
-      
       <LayoutHeader floatingMd hideMd={breadcrumbs} floatingSm />
 
-      {contentParts.map((part, idx) => (
-        <div key={idx}>
-          {part && (
-            <Container 
-              sx={{ 
-                my: 4,
-                '& .pagebuilder-mobile-only': {
-                  display: { xs: 'block', md: 'none' }
-                },
-                '& .pagebuilder-mobile-hidden': {
-                  display: { xs: 'none', md: 'block' }
-                }
-              }}
-            >
-              <div dangerouslySetInnerHTML={{ __html: part }} />
-            </Container>
-          )}
+      {contentParts.map((part, idx): React.ReactNode => {
+        if (part.type === 'html') {
+          if (!part.html) return null
+          return (
+            <NoSsr key={idx}>
+              <Container sx={containerSx}>
+                <div dangerouslySetInnerHTML={{ __html: part.html }} />
+              </Container>
+            </NoSsr>
+          )
+        }
 
-          {sliderIndices[idx] !== undefined && productSliders[sliderIndices[idx]]?.products?.length > 0 && (
-            <Container sx={{ my: 6 }}>
-              <Typography variant="h3" component="h2" sx={{ mb: 4, textAlign: 'center' }}>
-                Featured Products
-              </Typography>
-              
-              <Box sx={{ 
-                '& .slick-slide > div': { 
-                  px: 1,
-                  outline: 'none'
-                },
-                '& .slick-dots': { bottom: -40 },
-                '& .slick-arrow:before': { color: 'primary.main', fontSize: 40 }
-              }}>
-                <Slider {...sliderSettings}>
-                  {productSliders[sliderIndices[idx]].products.map((product: any) => (
-                    <div key={product.uid}>
-                      <ProductListItems
-                        items={[product]}
-                        loadingEager={1}
-                        title=""
-                      />
-                    </div>
-                  ))}
-                </Slider>
-              </Box>
-            </Container>
-          )}
-        </div>
-      ))}
+        const slider = productSliders.find((s) => s.blockId === part.blockId)
+        if (!slider || slider.products.length === 0) return null
+
+        return (
+          <NoSsr key={idx}>
+            <ProductScroller
+              title='Featured Products'
+              items={slider.products}
+              productListRenderer={productListRenderer}
+              sizes={responsiveVal(200, 400)}
+              itemScrollerProps={{
+                sx: (theme) => ({
+                  mb: theme.spacings.xxl,
+                  '& .ItemScroller-scroller': { gridAutoColumns: responsiveVal(200, 400) },
+                }),
+              }}
+            />
+          </NoSsr>
+        )
+      })}
     </>
   )
 }
@@ -179,6 +117,28 @@ HomePage.pageOptions = {
 
 export default HomePage
 
+function parseContentParts(
+  pageContent: string,
+  sliders: Array<{ blockId: string; skuString: string }>,
+): ContentPart[] {
+  const parts: ContentPart[] = []
+  let remaining = pageContent
+
+  for (const slider of sliders) {
+    const idx = remaining.indexOf(slider.skuString)
+    if (idx === -1) continue
+
+    const before = remaining.slice(0, idx)
+    if (before) parts.push({ type: 'html', html: before })
+    parts.push({ type: 'slider', blockId: slider.blockId })
+    remaining = remaining.slice(idx + slider.skuString.length)
+  }
+
+  if (remaining) parts.push({ type: 'html', html: remaining })
+
+  return parts
+}
+
 export const getStaticProps: GetPageStaticProps = async (context) => {
   const client = graphqlSharedClient(context)
   const conf = client.query({ query: StoreConfigDocument })
@@ -186,16 +146,16 @@ export const getStaticProps: GetPageStaticProps = async (context) => {
 
   const confData = (await conf).data
   const url = confData?.storeConfig?.cms_home_page ?? 'home'
-  
-  const cmsPageQuery = staticClient.query({ 
-    query: GetCmsPageDocument, 
-    variables: { identifier: url } 
+
+  const cmsPageQuery = staticClient.query({
+    query: GetCmsPageDocument,
+    variables: { identifier: url },
   })
   const layout = staticClient.query({ query: LayoutDocument, fetchPolicy: cacheFirst(staticClient) })
-  
+
   const productBlocksQuery = staticClient.query({
     query: GetCmsBlockDocument,
-    variables: { identifiers: PRODUCT_BLOCK_IDS }
+    variables: { identifiers: PRODUCT_BLOCK_IDS },
   })
 
   const cmsPageData = (await cmsPageQuery).data
@@ -203,23 +163,23 @@ export const getStaticProps: GetPageStaticProps = async (context) => {
   const productBlocksData = (await productBlocksQuery).data
   const blocks = (productBlocksData?.cmsBlocks?.items || []).filter(Boolean)
 
-  const productSliders: Array<{blockId: string, products: any[]}> = []
+  const productSliders: Array<{ blockId: string; products: any[] }> = []
+  const sliderMeta: Array<{ blockId: string; skuString: string }> = []
 
   for (const blockId of PRODUCT_BLOCK_IDS) {
     const block = blocks.find((b: any) => b.identifier === blockId)
-    
     if (!block) continue
 
     try {
-      let cleanContent = (block.content ?? '')
-      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-      .replace(/<[^>]*>/g, '')
-      .trim()
-      
+      const cleanContent = (block.content ?? '')
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+        .replace(/<[^>]*>/g, '')
+        .trim()
+
       const productSkus = cleanContent
         .split(',')
-        .map(sku => sku.trim())
-        .filter(sku => sku.length > 0 && /^[A-Za-z0-9_-]+$/.test(sku))
+        .map((sku: string) => sku.trim())
+        .filter((sku: string) => sku.length > 0 && /^[A-Za-z0-9_-]+$/.test(sku))
 
       if (productSkus.length === 0) continue
 
@@ -228,36 +188,35 @@ export const getStaticProps: GetPageStaticProps = async (context) => {
         variables: {
           pageSize: 20,
           currentPage: 1,
-          filters: { 
-            sku: { in: productSkus } 
-          }
-        }
+          filters: { sku: { in: productSkus } },
+        },
       })
 
-      const queryResult = await productsQuery
-      const productsData = queryResult.data
+      const { data: productsData } = await productsQuery
 
       if (productsData?.products?.items && Array.isArray(productsData.products.items)) {
-        productsData.products.items.sort((a: any, b: any) => {
-          const indexA = productSkus.indexOf(a.sku)
-          const indexB = productSkus.indexOf(b.sku)
-          return indexA - indexB
+        const sorted = [...productsData.products.items].sort((a: any, b: any) => {
+          return productSkus.indexOf(a.sku) - productSkus.indexOf(b.sku)
         })
 
-        productSliders.push({
-          blockId,
-          products: productsData.products.items
-        })
+        productSliders.push({ blockId, products: sorted })
+        sliderMeta.push({ blockId, skuString: productSkus.join(',') })
       }
-    } catch (error) {
+    } catch {
       continue
     }
   }
+
+  const contentParts: ContentPart[] =
+    cmsPage?.content && sliderMeta.length > 0
+      ? parseContentParts(cmsPage.content, sliderMeta)
+      : []
 
   return {
     props: {
       cmsPage,
       productSliders,
+      contentParts,
       ...(await layout).data,
       apolloState: await conf.then(() => client.cache.extract()),
     },

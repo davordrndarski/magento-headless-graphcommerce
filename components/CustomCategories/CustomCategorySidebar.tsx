@@ -21,6 +21,7 @@ export function CustomCategorySidebar({ category }: CustomCategorySidebarProps) 
       defaultExpanded 
       disableGutters
       elevation={0}
+      className="category-sidebar-filter"
       sx={(theme) => ({
         '&:before': { display: 'none' },
         borderTop: '1px solid',

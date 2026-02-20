@@ -61,7 +61,8 @@
 .category-grid-wrapper .category-grid-item img {
     position: static !important;
     height: 150px !important;
-    object-fit: contain;
+    object-fit: cover;
+    width: 100% !important;
 }
 
 .category-grid-wrapper {
@@ -71,10 +72,20 @@
 }
 
 .category-grid-wrapper > a {
+    background: none;
     flex: 1;
-    background: #ccc;
+    border: 1px solid #ccc;
+    text-decoration: none;
 }
 
+.category-grid-wrapper > a .category-grid-name {
+    text-align: center;
+    color: #000;
+    text-transform: uppercase;
+    padding: 5px 0 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
 
 
 /* Home product */
@@ -98,15 +109,15 @@ header.LayoutDefault-header svg  {
     filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(305deg) brightness(102%) contrast(102%);
 }
 
-.LayoutDefault-fabs.noSticky a.CartFab-cart svg {
-    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(305deg) brightness(102%) contrast(102%);
+.CartFab-root svg {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(305deg) brightness(102%) contrast(102%) !important;
 }
 
-.LayoutDefault-fabs.noSticky a.CartFab-cart {
+.CartFab-cart {
     background-color: #000 !important;
 }
 
-.LayoutDefault-fabs.noSticky {
+.LayoutDefault-fabs {
     z-index: 99999;
 }
 
@@ -114,7 +125,7 @@ header.LayoutDefault-header svg  {
     margin-left: 50px;
 }
 
-.LayoutDefault-header.noSticky .DesktopNavBar-root a {
+.DesktopNavBar-root a {
     color: #fff !important;
 }
 
@@ -134,6 +145,14 @@ header.LayoutDefault-header svg  {
 
 /* Products */
 
+.ProductListItem-titleContainer {
+    margin-bottom: 20px;
+}
+
+.slick-arrow  {
+    display: none !important;
+}
+
 .AddProductsToCartForm .MuiBox-root .ProductListItem-root {
     border: 1px solid #ccc;
     padding: 20px;
@@ -145,11 +164,15 @@ header.LayoutDefault-header svg  {
 
 .AddProductsToCartForm .MuiBox-root .ProductListItem-root .MuiButtonBase-root {
     background-color: #000;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
 }
 
 .AddProductsToCartForm .MuiBox-root .ProductListItem-root .MuiButtonBase-root.ProductWishlistChipBase-wishlistButton {
     background-color: #fff;
     padding: 0;
+    position: static;
 }
 
 .AddProductsToCartForm .MuiBox-root .ProductListItem-root .MuiButtonBase-root svg {
@@ -252,6 +275,93 @@ header.LayoutDefault-header svg  {
     padding: 10px 0;
 }
 
+/* Listanje */
 
-/* Tabovi */
+.category-sidebar-filter {
+    margin-top: 48px !important;
+}
+
+.LayoutDefault-children {
+    margin-top: 30px;
+}
+
+
+/* Single page */
+
+.LayoutDefault-children .ProductPageDescription-root h1 {
+    font-size: 23px !important;
+}
+
+.LayoutDefault-children .ProductPageDescription-root p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+@media only screen and (max-width:1600px) {
+    .slick-slider .AddProductsToCartForm .ProductListItem-titleContainer h2 {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width:1100px) {
+    .bottom_info .pagebuilder-column-line {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    header.LayoutDefault-header {
+        height: auto;
+        padding: 10px 0;
+    }
+    .mui-style-rh1ser {
+        height: 58px;
+    }
+}
+
+
+
+@media only screen and (max-width:768px) {
+
+    .ProductListItem-titleContainer {
+        display: inline;
+    }
+
+    .ProductListItem-root .ProductListPrice-root {
+        text-align: left;
+    }
+
+    .AddProductsToCartForm .MuiBox-root .ProductListItem-root {
+        padding: 10px;
+    }
+    header.LayoutDefault-header .GcLogo-parent img {
+        height: 25px;
+    }
+        .mui-style-rh1ser {
+        height: 45px;
+    }
+    .two-baner .pagebuilder-column-line {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .two-baner {
+        margin-top: -30px;
+    }
+    .category_baner {
+        margin-top: 50px;
+    }
+    .category_baner .pagebuilder-column-line {
+        grid-gap: 5px;
+        margin: 5px 0;
+    }
+    .bottom_info .pagebuilder-column-line {
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 0px;
+    }
+    .footer_link_list {
+        padding: 30px 0px;
+        flex-direction: column;
+    }
+}
+
+
+
+
 
