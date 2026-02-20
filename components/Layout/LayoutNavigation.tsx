@@ -76,7 +76,8 @@ function CategoryNavItem({ category }: { category: any }) {
             display: isHovered ? 'block' : 'none',
             position: 'absolute',
             top: '100%',
-            background: '#ccc',
+            background: '#000',
+            border: '1px solid #fff',
             width: '200px',
             zIndex: 1000,
           }}
