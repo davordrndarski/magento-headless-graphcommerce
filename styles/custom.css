@@ -94,6 +94,10 @@
     display: inline;
 }
 
+.ProductListItem-titleContainer {
+    display: inline;
+}
+
 
 /* Header */
 
@@ -147,6 +151,16 @@ header.LayoutDefault-header svg  {
 
 .ProductListItem-titleContainer {
     margin-bottom: 20px;
+}
+
+
+.ProductListItem-root .ProductListPrice-root {
+    text-align: left;
+    width: 100%;
+}
+
+.ProductListItem-root .ProductListPrice-root .NumberFormat {
+    font-weight: bold;
 }
 
 .slick-arrow  {
@@ -321,13 +335,23 @@ header.LayoutDefault-header svg  {
 
 @media only screen and (max-width:768px) {
 
-    .ProductListItem-titleContainer {
-        display: inline;
+    .LayoutDefault-fabs {
+        position: absolute;
+        top: 2px;
     }
 
-    .ProductListItem-root .ProductListPrice-root {
-        text-align: left;
+    .CartFab-cart {
+        right: 25px;
     }
+
+    .Overlay.MuiBox-root {
+        z-index: 999999;
+    }
+
+    .LayoutHeaderContent-content {
+        display: none;
+    }
+
 
     .AddProductsToCartForm .MuiBox-root .ProductListItem-root {
         padding: 10px;
@@ -344,12 +368,24 @@ header.LayoutDefault-header svg  {
     .two-baner {
         margin-top: -30px;
     }
-    .category_baner {
-        margin-top: 50px;
+    .category_baner,
+    .bottom_info {
+        margin-top: -50px;
+    }
+    .category-grid-wrapper .category-grid-item img {
+        height: 90px !important;
+    }
+    .category-grid-wrapper > a .category-grid-name {
+        padding: 0px 0 7px;
+        font-size: 12px;
     }
     .category_baner .pagebuilder-column-line {
         grid-gap: 5px;
         margin: 5px 0;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .category_baner .pagebuilder-column-line .pagebuilder-column:last-child {
+        grid-column: span 2;
     }
     .bottom_info .pagebuilder-column-line {
         grid-template-columns: repeat(1, 1fr);
@@ -358,6 +394,25 @@ header.LayoutDefault-header svg  {
     .footer_link_list {
         padding: 30px 0px;
         flex-direction: column;
+    }
+
+    /* cat */
+
+    .category-grid-wrapper {
+        display: flex;
+        overflow: scroll;
+        white-space: nowrap;
+        gap: 0;
+        justify-content: space-between;
+    }
+    .category-grid-wrapper > a {
+        min-width: 48%;
+        flex: inherit;
+        margin-right: 2%;
+        width: 48%;
+    }
+    .category-grid-wrapper > a:last-child {
+        margin-right: 0;
     }
 }
 

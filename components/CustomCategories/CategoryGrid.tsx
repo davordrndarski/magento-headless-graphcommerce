@@ -17,7 +17,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
   if (!categories || categories.length === 0) return null
 
   return (
-    <Box className="category-grid-wrapper">
+    <Box className="cat_overflow category-grid-wrapper">
       {categories.map((category) => (
         <Link
           key={category.uid}
