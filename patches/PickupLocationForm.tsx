@@ -2,7 +2,6 @@ import type { ActionCardItemBase, UseFormComposeOptions } from '@graphcommerce/e
 import {
   ActionCardListForm,
   ApolloErrorAlert,
-  TextFieldElement,
   useFormCompose,
   useWatch,
 } from '@graphcommerce/ecommerce-ui'
@@ -13,9 +12,7 @@ import {
   GetShippingMethodsDocument,
   useShippingMethod,
 } from '@graphcommerce/magento-cart-shipping-method'
-import { FormRow } from '@graphcommerce/next-ui'
-import { Trans } from '@lingui/react/macro'
-import { useDeferredValue, useMemo } from 'react'
+import { useMemo } from 'react'
 import { GetPickupLocationsForProductsDocument } from '../../../../graphql/GetPickupLocationsForProducts.gql'
 import type {
   SetPickupLocationOnCartMutation,
@@ -45,17 +42,12 @@ export function PickupLocationForm(props: PickupLocationFormProps) {
 
   const isAvailable = currentShippingMethod === 'instore-pickup' && productInput.length > 0
 
-  const defaultSearchTerm = shippingAddress?.pickup_location_code
-    ? undefined
-    : (shippingAddress?.postcode ?? undefined)
-
   const form = useFormGqlMutationCart<
     SetPickupLocationOnCartMutation,
-    SetPickupLocationOnCartMutationVariables & { searchTerm?: string }
+    SetPickupLocationOnCartMutationVariables
   >(SetPickupLocationOnCartDocument, {
     mode: 'onChange',
     defaultValues: {
-      searchTerm: defaultSearchTerm,
       pickupLocationCode: shippingAddress?.pickup_location_code ?? undefined,
     },
     onBeforeSubmit: ({ cartId, pickupLocationCode }) => ({
@@ -78,12 +70,9 @@ export function PickupLocationForm(props: PickupLocationFormProps) {
 
   useFormCompose({ form, step, submit, key: 'PickupLocationForm' })
 
-  const watchedSearchTerm = useWatch({ control, name: 'searchTerm' })
-  const searchTerm = useDeferredValue((watchedSearchTerm || defaultSearchTerm) ?? '')
   const locationsQuery = useQuery(GetPickupLocationsForProductsDocument, {
     variables: {
       productInput,
-      searchTerm: `${searchTerm.length < 4 ? '' : searchTerm}:${shippingAddress?.country.code}`,
     },
     skip: !availableMethods.data,
   })
@@ -94,29 +83,15 @@ export function PickupLocationForm(props: PickupLocationFormProps) {
     [locationData?.pickupLocations?.items],
   )
 
-  const selected = useWatch({ control, name: 'pickupLocationCode' })
-
-  // What to do when shippingForm is pickup but there aren't any available pickup locations?
   if (!isAvailable) return null
 
   return (
     <form onSubmit={submit} noValidate>
-      {!selected && (
-        <FormRow>
-          <TextFieldElement
-            name='searchTerm'
-            control={control}
-            rules={{ required: false, minLength: 4 }}
-            label={<Trans>Zip code or city</Trans>}
-            type='text'
-          />
-        </FormRow>
-      )}
-
       <ActionCardListForm<Location & ActionCardItemBase, SetPickupLocationOnCartMutationVariables>
         control={control}
         name='pickupLocationCode'
         errorMessage='Please select a pickup location'
+        required
         collapse
         size='large'
         color='secondary'
@@ -126,7 +101,6 @@ export function PickupLocationForm(props: PickupLocationFormProps) {
         }))}
         render={PickupLocationActionCard}
       />
-
       <ApolloErrorAlert error={availableMethods.error} />
     </form>
   )
