@@ -1,5 +1,5 @@
 diff --git a/components/PickupLocationForm.tsx b/components/PickupLocationForm.tsx
-index 1c71fc0..5065771 100644
+index 1c71fc0ffd09532dc5cfb146c96c844e21a21601..c5ee254075c68c1b1200641db618f755366d353d 100644
 --- a/components/PickupLocationForm.tsx
 +++ b/components/PickupLocationForm.tsx
 @@ -2,7 +2,6 @@ import type { ActionCardItemBase, UseFormComposeOptions } from '@graphcommerce/e
@@ -10,17 +10,19 @@ index 1c71fc0..5065771 100644
    useFormCompose,
    useWatch,
  } from '@graphcommerce/ecommerce-ui'
-@@ -13,9 +12,7 @@ import {
+@@ -13,10 +12,8 @@ import {
    GetShippingMethodsDocument,
    useShippingMethod,
  } from '@graphcommerce/magento-cart-shipping-method'
 -import { FormRow } from '@graphcommerce/next-ui'
 -import { Trans } from '@lingui/react/macro'
 -import { useDeferredValue, useMemo } from 'react'
+-import { GetPickupLocationsForProductsDocument } from '../graphql/GetPickupLocationsForProducts.gql'
 +import { useMemo } from 'react'
- import { GetPickupLocationsForProductsDocument } from '../graphql/GetPickupLocationsForProducts.gql'
++import { GetPickupLocationsForProductsDocument } from '../../../../graphql/GetPickupLocationsForProducts.gql'
  import type {
    SetPickupLocationOnCartMutation,
+   SetPickupLocationOnCartMutationVariables,
 @@ -45,17 +42,12 @@ export function PickupLocationForm(props: PickupLocationFormProps) {
  
    const isAvailable = currentShippingMethod === 'instore-pickup' && productInput.length > 0
@@ -84,20 +86,3 @@ index 1c71fc0..5065771 100644
          collapse
          size='large'
          color='secondary'
-diff --git a/graphql/GetPickupLocationsForProducts.graphql b/graphql/GetPickupLocationsForProducts.graphql
-index 31171be..ed8bed3 100644
---- a/graphql/GetPickupLocationsForProducts.graphql
-+++ b/graphql/GetPickupLocationsForProducts.graphql
-@@ -1,12 +1,8 @@
- query GetPickupLocationsForProducts(
--  $searchTerm: String!
--  $radiusKm: Int = 100
-   $productInput: [ProductInfoInput!]!
-   $currentPage: Int = 1
- ) {
-   pickupLocations(
--    area: { search_term: $searchTerm, radius: $radiusKm }
--    sort: { distance: ASC }
-     productsInfo: $productInput
-     pageSize: 20
-     currentPage: $currentPage

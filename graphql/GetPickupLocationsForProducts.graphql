@@ -1,10 +1,8 @@
 query GetPickupLocationsForProducts(
-  $searchTerm: String!
   $productInput: [ProductInfoInput!]!
   $currentPage: Int = 1
 ) {
   pickupLocations(
-    filters: { postcode: { eq: $searchTerm } }
     productsInfo: $productInput
     pageSize: 20
     currentPage: $currentPage
