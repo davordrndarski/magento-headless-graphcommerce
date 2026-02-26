@@ -11,7 +11,7 @@
     "node": ">=20 <24.0.0"
   },
   "scripts": {
-    "dev": "concurrently -k -n codegen,next 'gc-gql-codegen -w' 'next dev --turbopack' -c 'magenta,cyan'",
+    "dev": "concurrently -k -n codegen,next 'gc-gql-codegen -w' 'next dev' -c 'magenta,cyan'",
     "codegen": "graphcommerce codegen && gc-mesh build && gc-gql-codegen",
     "build": "graphcommerce codegen && gc-mesh build && gc-gql-codegen && next build",
     "start": "next start",
@@ -49,6 +49,7 @@
     "@graphcommerce/magento-cart-email": "10.0.3",
     "@graphcommerce/magento-cart-items": "10.0.3",
     "@graphcommerce/magento-cart-payment-method": "10.0.3",
+    "@graphcommerce/magento-cart-pickup": "patch:@graphcommerce/magento-cart-pickup@npm%3A10.0.3#~/.yarn/patches/@graphcommerce-magento-cart-pickup-npm-10.0.3-74b90ba266.patch",
     "@graphcommerce/magento-cart-shipping-address": "10.0.3",
     "@graphcommerce/magento-cart-shipping-method": "10.0.3",
     "@graphcommerce/magento-category": "10.0.3",
@@ -117,6 +118,7 @@
     "graphql": "^16.12.0",
     "next": "16.1.1",
     "next-sitemap": "4.2.3",
+    "patch-package": "^8.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "7.67.0",

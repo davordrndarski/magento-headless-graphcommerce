@@ -1,0 +1,30 @@
+query GetPickupLocationsForProducts(
+  $searchTerm: String!
+  $productInput: [ProductInfoInput!]!
+  $currentPage: Int = 1
+) {
+  pickupLocations(
+    filters: { postcode: { eq: $searchTerm } }
+    productsInfo: $productInput
+    pageSize: 20
+    currentPage: $currentPage
+  ) {
+    items {
+      city
+      pickup_location_code
+      contact_name
+      country_id
+      description
+      email
+      fax
+      latitude
+      longitude
+      name
+      phone
+      postcode
+      region
+      region_id
+      street
+    }
+  }
+}
