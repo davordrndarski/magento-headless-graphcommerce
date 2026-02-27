@@ -1962,34 +1962,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphcommerce/magento-cart-pickup@patch:@graphcommerce/magento-cart-pickup@npm%3A10.0.3#./patches/@graphcommerce-magento-cart-pickup-npm-10.0.3-74b90ba266.patch::locator=%40graphcommerce%2Fmagento-open-source%40workspace%3A.":
-  version: 10.0.3
-  resolution: "@graphcommerce/magento-cart-pickup@patch:@graphcommerce/magento-cart-pickup@npm%3A10.0.3#./patches/@graphcommerce-magento-cart-pickup-npm-10.0.3-74b90ba266.patch::version=10.0.3&hash=f185b5&locator=%40graphcommerce%2Fmagento-open-source%40workspace%3A."
-  peerDependencies:
-    "@graphcommerce/ecommerce-ui": ^10.0.3
-    "@graphcommerce/eslint-config-pwa": ^10.0.3
-    "@graphcommerce/graphql": ^10.0.3
-    "@graphcommerce/graphql-mesh": ^10.0.3
-    "@graphcommerce/image": ^10.0.3
-    "@graphcommerce/magento-cart": ^10.0.3
-    "@graphcommerce/magento-cart-shipping-method": ^10.0.3
-    "@graphcommerce/magento-store": ^10.0.3
-    "@graphcommerce/next-ui": ^10.0.3
-    "@graphcommerce/prettier-config-pwa": ^10.0.3
-    "@graphcommerce/react-hook-form": ^10.0.3
-    "@graphcommerce/typescript-config-pwa": ^10.0.3
-    "@lingui/core": ^5
-    "@lingui/macro": ^5
-    "@lingui/react": ^5
-    "@mui/material": ^7.0.0
-    framer-motion: ^11.0.0
-    next: "*"
-    react: ^19.2.0
-    react-dom: ^19.2.0
-  checksum: 10c0/b37cc3e3ca4bc0afb054579a3cfa8f4dc31c9bbc131078619946ffce029dd64b61b0d47b3bcdd2ae07b0f27bbaa1607119b5b18c5b219954073b9ae3dde102f7
-  languageName: node
-  linkType: hard
-
 "@graphcommerce/magento-cart-shipping-address@npm:10.0.3":
   version: 10.0.3
   resolution: "@graphcommerce/magento-cart-shipping-address@npm:10.0.3"
@@ -2266,7 +2238,7 @@ __metadata:
     "@graphcommerce/magento-cart-email": "npm:10.0.3"
     "@graphcommerce/magento-cart-items": "npm:10.0.3"
     "@graphcommerce/magento-cart-payment-method": "npm:10.0.3"
-    "@graphcommerce/magento-cart-pickup": "patch:@graphcommerce/magento-cart-pickup@npm%3A10.0.3#./patches/@graphcommerce-magento-cart-pickup-npm-10.0.3-74b90ba266.patch"
+    "@graphcommerce/magento-cart-pickup": "npm:10.0.3"
     "@graphcommerce/magento-cart-shipping-address": "npm:10.0.3"
     "@graphcommerce/magento-cart-shipping-method": "npm:10.0.3"
     "@graphcommerce/magento-category": "npm:10.0.3"
