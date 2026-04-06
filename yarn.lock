@@ -2302,7 +2302,7 @@ __metadata:
     "@next/env": "npm:16.1.1"
     "@parcel/watcher": "npm:^2.5.1"
     "@playwright/test": "npm:1.57.0"
-    "@serwist/next": "npm:10.0.0-preview.14"
+    "@serwist/next": "npm:9.0.9"
     "@types/node": "npm:^20.19.27"
     "@types/react": "npm:^19.2.7"
     "@types/react-dom": "npm:^19.2.3"
@@ -2324,7 +2324,7 @@ __metadata:
     react-hook-form: "npm:7.67.0"
     react-slick: "npm:^0.31.0"
     rxjs: "npm:^7.8.2"
-    serwist: "npm:10.0.0-preview.14"
+    serwist: "npm:9.0.9"
     sharp: "npm:0.34.5"
     slick-carousel: "npm:^1.8.1"
     ts-node: "npm:^10.9.2"
@@ -6036,64 +6036,52 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serwist/build@npm:10.0.0-preview.14":
-  version: 10.0.0-preview.14
-  resolution: "@serwist/build@npm:10.0.0-preview.14"
+"@serwist/build@npm:9.0.9":
+  version: 9.0.9
+  resolution: "@serwist/build@npm:9.0.9"
   dependencies:
-    "@serwist/utils": "npm:10.0.0-preview.14"
-    glob: "npm:11.0.3"
-    pretty-bytes: "npm:7.0.1"
+    common-tags: "npm:1.8.2"
+    glob: "npm:10.4.5"
+    pretty-bytes: "npm:6.1.1"
     source-map: "npm:0.8.0-beta.0"
-    zod: "npm:4.1.5"
+    zod: "npm:3.23.8"
   peerDependencies:
     typescript: ">=5.0.0"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/647f8492b791635588996993662b30dc1c0a7a2ac106db270ff5f3bc6e289133802a485883bf3bbef31b31a0ff75d93d3904f35a37251a509a4b230927a3daa3
+  checksum: 10c0/b12e8180ba244cce1e0d2eba3ee2a2f128db5a288cb2b9b3469b6f6f23e290e3dc67eda40ce573d135dbb23526e30de9e8214be0c02b979663873a9c5370afeb
   languageName: node
   linkType: hard
 
-"@serwist/next@npm:10.0.0-preview.14":
-  version: 10.0.0-preview.14
-  resolution: "@serwist/next@npm:10.0.0-preview.14"
+"@serwist/next@npm:9.0.9":
+  version: 9.0.9
+  resolution: "@serwist/next@npm:9.0.9"
   dependencies:
-    "@serwist/build": "npm:10.0.0-preview.14"
-    "@serwist/utils": "npm:10.0.0-preview.14"
-    "@serwist/webpack-plugin": "npm:10.0.0-preview.14"
-    "@serwist/window": "npm:10.0.0-preview.14"
-    chalk: "npm:5.6.0"
-    glob: "npm:11.0.3"
-    serwist: "npm:10.0.0-preview.14"
-    zod: "npm:4.1.5"
+    "@serwist/build": "npm:9.0.9"
+    "@serwist/webpack-plugin": "npm:9.0.9"
+    "@serwist/window": "npm:9.0.9"
+    chalk: "npm:5.3.0"
+    glob: "npm:10.4.5"
+    serwist: "npm:9.0.9"
+    zod: "npm:3.23.8"
   peerDependencies:
     next: ">=14.0.0"
     typescript: ">=5.0.0"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/5b824e862451b34c7806f49a1064745d673327d66bd96c5d5f4e8c88d4b07097e53910897265262d931f2384787fe3a90756c9be6250fda3d368d54ddc584bdd
+  checksum: 10c0/3b2574f4c238e3f326b394d6154f2e62edc4338245c50688030337a599feb81d52f834be816b767afc2ad7c1491cadf814f0cd2a6223fc9bb91487efa888e5d4
   languageName: node
   linkType: hard
 
-"@serwist/utils@npm:10.0.0-preview.14":
-  version: 10.0.0-preview.14
-  resolution: "@serwist/utils@npm:10.0.0-preview.14"
+"@serwist/webpack-plugin@npm:9.0.9":
+  version: 9.0.9
+  resolution: "@serwist/webpack-plugin@npm:9.0.9"
   dependencies:
-    common-tags: "npm:1.8.2"
-    kolorist: "npm:1.8.0"
-  checksum: 10c0/84966b6adbf395da00493d4a36ca1a4619a69a8389be5368a32b87e06e821aeea7a98f8c788c91367ed56fdaedfcd94419ab2344ba4727a0c3433fb6042594d5
-  languageName: node
-  linkType: hard
-
-"@serwist/webpack-plugin@npm:10.0.0-preview.14":
-  version: 10.0.0-preview.14
-  resolution: "@serwist/webpack-plugin@npm:10.0.0-preview.14"
-  dependencies:
-    "@serwist/build": "npm:10.0.0-preview.14"
-    "@serwist/utils": "npm:10.0.0-preview.14"
-    pretty-bytes: "npm:7.0.1"
-    zod: "npm:4.1.5"
+    "@serwist/build": "npm:9.0.9"
+    pretty-bytes: "npm:6.1.1"
+    zod: "npm:3.23.8"
   peerDependencies:
     typescript: ">=5.0.0"
     webpack: 4.4.0 || ^5.9.0
@@ -6102,22 +6090,22 @@ __metadata:
       optional: true
     webpack:
       optional: true
-  checksum: 10c0/90b820110bd435469ee29e8ebfcb5b265452aad0c8fc2fa1661db3c432903630e41851bffcf0c70f5282e46dd66a7c19ff005a73ffbee7e0e926c1785fb03058
+  checksum: 10c0/8b5f0381634211f1282a6dc6c408c0d4761a91ee32f97f354b614230857b10abb4d3d92e126b7a214406678ca155768030b7ef5d576f8a4f36918020d213dba4
   languageName: node
   linkType: hard
 
-"@serwist/window@npm:10.0.0-preview.14":
-  version: 10.0.0-preview.14
-  resolution: "@serwist/window@npm:10.0.0-preview.14"
+"@serwist/window@npm:9.0.9":
+  version: 9.0.9
+  resolution: "@serwist/window@npm:9.0.9"
   dependencies:
     "@types/trusted-types": "npm:2.0.7"
-    serwist: "npm:10.0.0-preview.14"
+    serwist: "npm:9.0.9"
   peerDependencies:
     typescript: ">=5.0.0"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/23a41487fc3745ff559c950210cc55b1982f73ec0052d7ccce30236e54a8c3e933ebd1eb6ad928950cece8507fa7d71a6c331db45327e2a83585b094a18fa174
+  checksum: 10c0/40e1f375a5c1fd72e1d35b19975b28e299c2426bed952927540cce5111f96701829f10993aaa151bdb286e35174a11ca22bb6988fa0dc1b331718e70b63b20b4
   languageName: node
   linkType: hard
 
@@ -7802,10 +7790,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:5.6.0":
-  version: 5.6.0
-  resolution: "chalk@npm:5.6.0"
-  checksum: 10c0/f8558fc12fd9805f167611803b325b0098bbccdc9f1d3bafead41c9bac61f263357f3c0df0cbe28bc2fd5fca3edcf618b01d6771a5a776b4c15d061482a72b23
+"chalk@npm:5.3.0":
+  version: 5.3.0
+  resolution: "chalk@npm:5.3.0"
+  checksum: 10c0/8297d436b2c0f95801103ff2ef67268d362021b8210daf8ddbe349695333eb3610a71122172ff3b0272f1ef2cf7cc2c41fdaa4715f52e49ffe04c56340feed09
   languageName: node
   linkType: hard
 
@@ -9841,19 +9829,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:11.0.3":
-  version: 11.0.3
-  resolution: "glob@npm:11.0.3"
+"glob@npm:10.4.5":
+  version: 10.4.5
+  resolution: "glob@npm:10.4.5"
   dependencies:
-    foreground-child: "npm:^3.3.1"
-    jackspeak: "npm:^4.1.1"
-    minimatch: "npm:^10.0.3"
+    foreground-child: "npm:^3.1.0"
+    jackspeak: "npm:^3.1.2"
+    minimatch: "npm:^9.0.4"
     minipass: "npm:^7.1.2"
     package-json-from-dist: "npm:^1.0.0"
-    path-scurry: "npm:^2.0.0"
+    path-scurry: "npm:^1.11.1"
   bin:
     glob: dist/esm/bin.mjs
-  checksum: 10c0/7d24457549ec2903920dfa3d8e76850e7c02aa709122f0164b240c712f5455c0b457e6f2a1eee39344c6148e39895be8094ae8cfef7ccc3296ed30bce250c661
+  checksum: 10c0/19a9759ea77b8e3ca0a43c2f07ecddc2ad46216b786bb8f993c445aee80d345925a21e5280c7b7c6c59e860a0154b84e4b2b60321fea92cd3c56b4a7489f160e
   languageName: node
   linkType: hard
 
@@ -10305,10 +10293,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"idb@npm:8.0.3":
-  version: 8.0.3
-  resolution: "idb@npm:8.0.3"
-  checksum: 10c0/421cd9a3281b7564528857031cc33fd9e95753f8191e483054cb25d1ceea7303a0d1462f4f69f5b41606f0f066156999e067478abf2460dfcf9cab80dae2a2b2
+"idb@npm:8.0.0":
+  version: 8.0.0
+  resolution: "idb@npm:8.0.0"
+  checksum: 10c0/d27547e03939d3d269cea38c3d4528569621ec134c717ebfc1ff816dce18e4f77372dba1d930384a9949ac56dc600e3790f98f1812a4164004e71fec302ee491
   languageName: node
   linkType: hard
 
@@ -11162,13 +11150,6 @@ __metadata:
   dependencies:
     graceful-fs: "npm:^4.1.11"
   checksum: 10c0/00d8e4c48d0d699b743b3b028e807295ea0b225caf6179f51029e19783a93ad8bb9bccde617d169659fbe99559d73fb35f796214de031d0023c26b906cecd70a
-  languageName: node
-  linkType: hard
-
-"kolorist@npm:1.8.0":
-  version: 1.8.0
-  resolution: "kolorist@npm:1.8.0"
-  checksum: 10c0/73075db44a692bf6c34a649f3b4b3aea4993b84f6b754cbf7a8577e7c7db44c0bad87752bd23b0ce533f49de2244ce2ce03b7b1b667a85ae170a94782cc50f9b
   languageName: node
   linkType: hard
 
@@ -12799,10 +12780,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-bytes@npm:7.0.1":
-  version: 7.0.1
-  resolution: "pretty-bytes@npm:7.0.1"
-  checksum: 10c0/14ffb503d2de3588042c722848062a4897e6faece1694e0c83ba5669ec003d73311d946d50d2b3c6099a6a306760011b8446ee3cf9cf86eca13a454a8f1c47cb
+"pretty-bytes@npm:6.1.1":
+  version: 6.1.1
+  resolution: "pretty-bytes@npm:6.1.1"
+  checksum: 10c0/c7a660b933355f3b4587ad3f001c266a8dd6afd17db9f89ebc50812354bb142df4b9600396ba5999bdb1f9717300387dc311df91895c5f0f2a1780e22495b5f8
   languageName: node
   linkType: hard
 
@@ -13393,18 +13374,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serwist@npm:10.0.0-preview.14":
-  version: 10.0.0-preview.14
-  resolution: "serwist@npm:10.0.0-preview.14"
+"serwist@npm:9.0.9":
+  version: 9.0.9
+  resolution: "serwist@npm:9.0.9"
   dependencies:
-    "@serwist/utils": "npm:10.0.0-preview.14"
-    idb: "npm:8.0.3"
+    idb: "npm:8.0.0"
   peerDependencies:
     typescript: ">=5.0.0"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/68803a3447642f3894a811621399a35021adfef4500eec47882af2feedc2987df87cdd607923e267572789f35c89fce9dabd3e53cd24ad3ae86fb5dc224262d5
+  checksum: 10c0/26c0a4ed58b6faa770480567516659a13dc1351c80a481fa2516ecad5a7163caa3b7b15d3da2efe73a07b9200022d0b0a62ae2f6165b6038b6a1b48439b4f1cb
   languageName: node
   linkType: hard
 
@@ -15220,10 +15200,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:4.1.5":
-  version: 4.1.5
-  resolution: "zod@npm:4.1.5"
-  checksum: 10c0/7826fb931bc71d4d0fff2fbb72f1a1cf30a6672cf9dbe6933a216bbb60242ef1c3bdfbcd3c5b27e806235a35efaad7a4a9897ff4d3621452f9ea278bce6fd42a
+"zod@npm:3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
   languageName: node
   linkType: hard
 
