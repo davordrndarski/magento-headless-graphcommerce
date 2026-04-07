@@ -30,6 +30,7 @@
 }
 
 
+
 .DesktopNavBar-root .MuiTypography-root {
     position: relative;
     padding-top: 0;
@@ -231,6 +232,13 @@ header.LayoutDefault-header svg  {
     width: 100%;
 }
 
+.CategoryDescription-root {
+    min-width: 100%;
+}
+.CategoryDescription-root p {
+    font-size: 16px;
+    line-height: 1.5;
+}
 
 /*  */
 
@@ -401,9 +409,9 @@ header.LayoutDefault-header svg  {
     .category-grid-wrapper {
         display: flex;
         overflow: scroll;
-        white-space: nowrap;
         gap: 0;
         justify-content: space-between;
+        margin-right: -2%;
     }
     .category-grid-wrapper > a {
         min-width: 48%;
@@ -413,6 +421,17 @@ header.LayoutDefault-header svg  {
     }
     .category-grid-wrapper > a:last-child {
         margin-right: 0;
+    }
+
+    .CategoryDescription-root p {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    /* cat */
+    .CategoryDescription-root {
+        height: 300px;
+        overflow: hidden;
     }
 }
 

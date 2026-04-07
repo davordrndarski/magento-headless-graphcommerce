@@ -45,6 +45,9 @@ export const ProductListLayoutSidebar = memoDeep(function ProductListLayoutSideb
   if (!params || !products?.items || !filterTypes) return null
   const { total_count, sort_fields, page_info } = products
 
+  const visibleChildren = (category?.children as any)?.filter((c: any) => c?.include_in_menu === 1) ?? []
+  const hasSubcategories = (category as any)?.children_count > 0 && visibleChildren.length > 0
+
   return (
     <ProductFiltersPro
       params={params}
@@ -111,26 +114,28 @@ export const ProductListLayoutSidebar = memoDeep(function ProductListLayoutSideb
                 category={category}
                 productListRenderer={productListRenderer}
               />
-              <MediaQuery query={(theme) => theme.breakpoints.down('md')}>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
-                  {(category?.children as any)?.map((child: any) => (
-                    <Link
-                      key={child.uid}
-                      href={`/${child.url_path}`}
-                      style={{
-                        textDecoration: 'none',
-                        color: 'inherit',
-                        padding: '8px 16px',
-                        border: '1px solid #ddd',
-                        borderRadius: '4px',
-                        fontSize: '0.875rem',
-                      }}
-                    >
-                      {child.name}
-                    </Link>
-                  ))}
-                </Box>
-              </MediaQuery>
+              {hasSubcategories && (
+                <MediaQuery query={(theme) => theme.breakpoints.down('md')}>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
+                    {visibleChildren.map((child: any) => (
+                      <Link
+                        key={child.uid}
+                        href={`/${child.url_path}`}
+                        style={{
+                          textDecoration: 'none',
+                          color: 'inherit',
+                          padding: '8px 16px',
+                          border: '1px solid #ddd',
+                          borderRadius: '4px',
+                          fontSize: '0.875rem',
+                        }}
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </Box>
+                </MediaQuery>
+              )}
             </>
           ) : (
             <>
@@ -149,12 +154,10 @@ export const ProductListLayoutSidebar = memoDeep(function ProductListLayoutSideb
           sx={{ gridArea: 'count', width: '100%', my: 0, height: '1em' }}
         />
         <Box sx={{ gridArea: 'items' }}>
-          {/* DODATO - Prikaz kategorija sa thumbnail slikama */}
-          {category?.children && category.children.length > 0 && (
-            <CategoryGrid categories={category.children as any} />
+          {hasSubcategories && (
+            <CategoryGrid categories={visibleChildren} />
           )}
-          
-          {/* Proizvodi */}
+
           {products.items.length <= 0 ? (
             <ProductFiltersProNoResults search={params.search} />
           ) : (
